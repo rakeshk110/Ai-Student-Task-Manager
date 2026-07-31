@@ -1,0 +1,3 @@
+MVT = model , view , templates
+
+browser => project urls => app urls => views => models = template
