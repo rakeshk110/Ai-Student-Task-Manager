@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Register Page</h1>
+    <form action="/accounts/login/" class="form">
+        <input class="input" type="text" placeholder="Enter Name"> 
+        <input  class="input" type="text"  placeholder="Username"> 
+        <input class="input" type="email"  placeholder="Email">
+        <input class="input" type="password"  placeholder="Password">
+        <button>Register</button>
+         or 
+         <a href="/accounts/login/">Login</a>
+    </form>
+{% endblock %}
