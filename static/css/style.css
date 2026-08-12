@@ -33,7 +33,7 @@ h1{
     color:rgb(65, 3, 116) ;
 }
 
-button{
+.btn{
      width: 80%;
     height: 10%;
     font-size: 1.2em;
