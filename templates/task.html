@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task</title>
-</head>
-<body>
+{% extends 'base.html'%}
+
+{% block content %}
     <h1>Task Page</h1>
-    <form action="" method="POST">
+    <form action="" method="POST" class="task-form">
         {% csrf_token %}
-        {{form}}
-        <button type="submit">Add Task</button>
+        {{form.student}}
+        {{form.title}}
+        {{form.description}}
+        {{form.category}}
+        {{form.priority}}
+        {{form.status}}
+        {{form.due_date}}
+        <button class="task-btn" type="submit">Add Task</button>
     </form>
-    
-</body>
-</html>
+{% endblock %}
