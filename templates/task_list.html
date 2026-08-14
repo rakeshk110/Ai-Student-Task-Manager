@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Task List</h1>
+{% for task in tasks %}
+    <div> 
+        <h3>{{task.title}}</h3>
+        <p>{{task.description}}</p>
+        <p>{{task.category}}</p>
+        <p>{{task.due_date}}</p>
+        <p>{{task.status}}</p>
+        <a href="{% url 'update_task' task.id %}">update</a>
+        <a href="">delete</a>
+    </div>
+    <hr>
+{% empty %}
+    <h2>No Tasks available</h2>
+{% endfor %}
+{% endblock %}
