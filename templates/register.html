@@ -3,11 +3,12 @@
 
 {% block content %}
     <h1>Register Page</h1>
-    <form action="/accounts/login/" class="form">
-        <input class="input" type="text" placeholder="Enter Name"> 
-        <input  class="input" type="text"  placeholder="Username"> 
-        <input class="input" type="email"  placeholder="Email">
-        <input class="input" type="password"  placeholder="Password">
+    <form action="" class="form" method="POST">
+        {% csrf_token %}
+        <input class="input" type="text" name="name" placeholder="Enter Name" required> 
+        <input  class="input" type="text" name="username"  placeholder="Username" required> 
+        <input class="input" type="email" name="email" placeholder="Email" required>
+        <input class="input" type="password" name="password"  placeholder="Password" required>
         <button class="btn">Register</button>
          or 
          <a href="/accounts/login/">Login</a>

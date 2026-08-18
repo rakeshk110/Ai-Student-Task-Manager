@@ -10,7 +10,27 @@
 <body>
     <header>
         <h1>AI Student Task Manager</h1>
+        {% if user.is_authenticated %}
+            <a class="logout" href="{% url 'logout' %}">
+                Logout
+            </a>
+        {% endif %}
     </header>
+    {% if messages %}
+
+    <div class="message-container">
+
+        {% for message in messages %}
+
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+{% endif %}
     {% block content %}
 
     {% endblock %}

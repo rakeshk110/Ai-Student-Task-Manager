@@ -3,7 +3,8 @@
 
 {% block content %}
     <h1>Login page</h1>
-    <form action="/accounts/home/" class="form">
+    <form action="" class="form" method="POST">
+        {% csrf_token %}
         <input class="input"  placeholder="Enter username" type="text" name="username">
         <input class="input"  placeholder="Enter Password" type="password" name="password">
         <button class="btn">Login</button>
