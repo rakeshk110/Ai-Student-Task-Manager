@@ -136,3 +136,15 @@ header{
     align-items: center;
 
 }
+.task-btn{
+    border: 1px solid;
+    width: 200px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+#create-task{
+   
+}

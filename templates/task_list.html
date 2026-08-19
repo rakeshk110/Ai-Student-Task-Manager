@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>Task List</h1>
+<div class="task-btn"><a id="create-task" href="{% url 'task_create'  %}">Create Task</a></div>
 {% for task in tasks %}
     <div> 
         <h3>{{task.title}}</h3>

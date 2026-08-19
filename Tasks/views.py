@@ -8,6 +8,8 @@ def task_form(request):
     if request.method=="POST":
         form = TaskForm(request.POST)
         if form.is_valid():
+            task = form.save(commit=False)
+            task.student = request.user
             form.save()
             form = TaskForm()
     else:
@@ -17,7 +19,7 @@ def task_form(request):
 @login_required
 def task_list(request):
 
-    tasks = Task.objects.all()
+    tasks = Task.objects.filter(student=request.user)
     return render(request,"task_list.html",{"tasks":tasks})
 
 @login_required
