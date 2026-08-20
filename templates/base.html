@@ -4,36 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Student Task Manager</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>{% block title %}AI Student Task Manager{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2">
 </head>
 <body>
-    <header>
-        <h1>AI Student Task Manager</h1>
+    <header class="site-header">
+        <div class="site-header__brand">
+            {% if user.is_authenticated %}
+                <a href="{% url 'task_list' %}"><h1>AI Student Task Manager</h1></a>
+            {% else %}
+                <a href="{% url 'login' %}"><h1>AI Student Task Manager</h1></a>
+            {% endif %}
+        </div>
+
         {% if user.is_authenticated %}
-            <a class="logout" href="{% url 'logout' %}">
-                Logout
-            </a>
+            <nav class="site-nav">
+                <a class="nav-link {% if request.resolver_match.url_name == 'task_list' %}nav-link--active{% endif %}"
+                   href="{% url 'task_list' %}">My Tasks</a>
+                <a class="nav-link nav-link--primary {% if request.resolver_match.url_name == 'task_create' %}nav-link--active{% endif %}"
+                   href="{% url 'task_create' %}">+ New Task</a>
+                <a class="nav-link nav-link--logout" href="{% url 'logout' %}">Logout</a>
+            </nav>
         {% endif %}
     </header>
+
     {% if messages %}
+        <div class="message-container">
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-    <div class="message-container">
-
-        {% for message in messages %}
-
-            <div class="message {{ message.tags }}">
-                {{ message }}
-            </div>
-
-        {% endfor %}
-
-    </div>
-
-{% endif %}
-    {% block content %}
-
-    {% endblock %}
-    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 </body>
 </html>

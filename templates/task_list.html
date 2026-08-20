@@ -1,20 +1,98 @@
 {% extends 'base.html' %}
 
+{% block title %}Task List | AI Student Task Manager{% endblock %}
+
 {% block content %}
-<h1>Task List</h1>
-<div class="task-btn"><a id="create-task" href="{% url 'task_create'  %}">Create Task</a></div>
-{% for task in tasks %}
-    <div> 
-        <h3>{{task.title}}</h3>
-        <p>{{task.description}}</p>
-        <p>{{task.category}}</p>
-        <p>{{task.due_date}}</p>
-        <p>{{task.status}}</p>
-        <a href="{% url 'update_task' task.id %}">update</a>
-        <a href="{% url 'task_delete' task.id %}">delete</a>
+<section class="task-list-page">
+    <div class="page-header">
+        <div>
+            <h2 class="page-title">My Tasks</h2>
+            <p class="page-subtitle">Track assignments, projects, and deadlines in one place</p>
+        </div>
+        <a class="btn-create" href="{% url 'task_create' %}">+ Create Task</a>
     </div>
-    <hr>
-{% empty %}
-    <h2>No Tasks available</h2>
-{% endfor %}
+
+    {% if tasks %}
+        <section class="ai-task-helper">
+            <div class="ai-task-helper__content">
+                <h3 class="ai-task-helper__title">AI Task Suggestion</h3>
+                <p class="ai-task-helper__subtitle">Let the AI analyze your tasks and tell you what to work on next.</p>
+            </div>
+            <a class="btn-create ai-task-helper__button" href="{% url 'ai_suggest' %}">Suggest Next Task</a>
+        </section>
+
+        {% if show_ai %}
+            <section class="ai-result">
+                <div class="ai-result__card ai-result__card--primary">
+                    <div class="ai-result__label">Do This Next</div>
+                    <h3 class="ai-result__task">{{ ai_primary.title }}</h3>
+                    <p class="ai-result__reason">{{ ai_primary.reason }}</p>
+                </div>
+                <div class="ai-result__card">
+                    <div class="ai-result__label">Another Good Option</div>
+                    <h3 class="ai-result__task">{{ ai_secondary.title }}</h3>
+                    <p class="ai-result__reason">{{ ai_secondary.reason }}</p>
+                </div>
+            </section>
+        {% endif %}
+    {% endif %}
+
+    {% if tasks %}
+        <div class="task-stats">
+            <div class="stat-card">
+                <span class="stat-card__value">{{ tasks|length }}</span>
+                <span class="stat-card__label">Total</span>
+            </div>
+            <div class="stat-card stat-card--pending">
+                <span class="stat-card__value">{{ pending_count }}</span>
+                <span class="stat-card__label">Pending</span>
+            </div>
+            <div class="stat-card stat-card--progress">
+                <span class="stat-card__value">{{ in_progress_count }}</span>
+                <span class="stat-card__label">In Progress</span>
+            </div>
+            <div class="stat-card stat-card--done">
+                <span class="stat-card__value">{{ completed_count }}</span>
+                <span class="stat-card__label">Completed</span>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="task-grid">
+        {% for task in tasks %}
+            <article class="task-card task-card--priority-{{ task.priority }}">
+                <div class="task-card__body">
+                    <div class="task-card__header">
+                        <h3 class="task-card__title">{{ task.title }}</h3>
+                        <span class="badge badge--priority badge--priority-{{ task.priority }}">{{ task.get_priority_display }}</span>
+                    </div>
+                    <p class="task-card__description">{{ task.description }}</p>
+                    <div class="task-card__meta">
+                        <span class="badge badge--category">{{ task.get_category_display }}</span>
+                        <span class="badge badge--status {{ task.status }}">{{ task.get_status_display }}</span>
+                        {% if task.due_date %}
+                            <span class="badge badge--due">Due {{ task.due_date|date:"M d, Y" }}</span>
+                        {% else %}
+                            <span class="badge badge--due badge--due-none">No due date</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="task-card__footer">
+                    {% if task.status != "completed" %}
+                        <a class="btn-action btn-action--complete" href="{% url 'task_complete' task.id %}">✓ Complete</a>
+                    {% endif %}
+                    <a class="btn-action btn-action--edit" href="{% url 'update_task' task.id %}">Edit</a>
+                    <a class="btn-action btn-action--delete" href="{% url 'task_delete' task.id %}">Delete</a>
+                </div>
+            </article>
+        {% empty %}
+            <div class="empty-state">
+                <div class="empty-state__icon" aria-hidden="true">📋</div>
+                <h2>No tasks yet</h2>
+                <p>Start by creating your first task to stay organized.</p>
+                <a class="btn-create" href="{% url 'task_create' %}">+ Create Task</a>
+            </div>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}
