@@ -1,16 +1,22 @@
 {% extends 'base.html' %}
-{% load static %}
+
+{% block title %}Register | AI Student Task Manager{% endblock %}
 
 {% block content %}
-    <h1>Register Page</h1>
-    <form action="" class="form" method="POST">
-        {% csrf_token %}
-        <input class="input" type="text" name="name" placeholder="Enter Name" required> 
-        <input  class="input" type="text" name="username"  placeholder="Username" required> 
-        <input class="input" type="email" name="email" placeholder="Email" required>
-        <input class="input" type="password" name="password"  placeholder="Password" required>
-        <button class="btn">Register</button>
-         or 
-         <a href="/accounts/login/">Login</a>
-    </form>
+<div class="auth-page">
+    <h2 class="page-title">Create account</h2>
+    <p class="page-subtitle">Join to start managing your student tasks</p>
+    <div class="auth-card">
+        <form action="" class="form" method="POST">
+            {% csrf_token %}
+            <input class="input" type="text" name="name" placeholder="Full name" required>
+            <input class="input" type="text" name="username" placeholder="Username" required autocomplete="username">
+            <input class="input" type="email" name="email" placeholder="Email" required autocomplete="email">
+            <input class="input" type="password" name="password" placeholder="Password" required autocomplete="new-password">
+            <button class="btn btn--primary btn--block" type="submit">Register</button>
+            <span class="form-divider">or</span>
+            <a class="form-link" href="{% url 'login' %}">Already have an account? Login</a>
+        </form>
+    </div>
+</div>
 {% endblock %}

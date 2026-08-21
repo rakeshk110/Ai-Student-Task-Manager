@@ -1,15 +1,60 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
+
+{% block title %}Create Task | AI Student Task Manager{% endblock %}
 
 {% block content %}
-    <h1>Task Page</h1>
-    <form action="" method="POST" class="task-form">
+<section class="task-form-page">
+    <div class="task-form-page__header">
+        <a class="btn-back" href="{% url 'task_list' %}">&larr; Back to tasks</a>
+        <h2 class="page-title">Create Task</h2>
+        <p class="page-subtitle">Fill in the details below to add a new task</p>
+    </div>
+
+    <form action="" method="POST" class="task-form" novalidate>
         {% csrf_token %}
-        {{form.title}}
-        {{form.description}}
-        {{form.category}}
-        {{form.priority}}
-        {{form.status}}
-        {{form.due_date}}
-        <button class="task-btn" type="submit">Add Task</button>
+
+        <div class="form-field">
+            <label class="form-label" for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+            {{ form.title }}
+            {% if form.title.errors %}<p class="form-error">{{ form.title.errors.0 }}</p>{% endif %}
+        </div>
+
+        <div class="form-field">
+            <label class="form-label" for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+            {{ form.description }}
+            {% if form.description.errors %}<p class="form-error">{{ form.description.errors.0 }}</p>{% endif %}
+        </div>
+
+        <div class="form-row">
+            <div class="form-field">
+                <label class="form-label" for="{{ form.category.id_for_label }}">{{ form.category.label }}</label>
+                {{ form.category }}
+                {% if form.category.errors %}<p class="form-error">{{ form.category.errors.0 }}</p>{% endif %}
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="{{ form.priority.id_for_label }}">{{ form.priority.label }}</label>
+                {{ form.priority }}
+                {% if form.priority.errors %}<p class="form-error">{{ form.priority.errors.0 }}</p>{% endif %}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-field">
+                <label class="form-label" for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
+                {{ form.status }}
+                {% if form.status.errors %}<p class="form-error">{{ form.status.errors.0 }}</p>{% endif %}
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="{{ form.due_date.id_for_label }}">{{ form.due_date.label }}</label>
+                {{ form.due_date }}
+                {% if form.due_date.errors %}<p class="form-error">{{ form.due_date.errors.0 }}</p>{% endif %}
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a class="btn-secondary" href="{% url 'task_list' %}">Cancel</a>
+            <button class="task-btn" type="submit">Add Task</button>
+        </div>
     </form>
+</section>
 {% endblock %}
