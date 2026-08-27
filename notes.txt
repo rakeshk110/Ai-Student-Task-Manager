@@ -1,3 +1,14 @@
 MVT = model , view , templates
 
 browser => project urls => app urls => views => models = template
+
+start cmd :
+gunicorn config.wsgi:application
+
+build cmd :
+pip install -r requirements.txt && 
+python manage.py collectstatic --noinput && 
+python manage.py migrate
+
+middleware :
+whitenoise.middleware.WhiteNoiseMiddleware
